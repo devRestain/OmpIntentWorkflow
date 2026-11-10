@@ -1,0 +1,445 @@
+{
+  "schema_version": 3,
+  "example_only": true,
+  "manual_fixture": true,
+  "execution_status": "not_run",
+  "notice": "가상 사건과 기대 상태를 적은 수동 검증 fixture다. 사건은 실행 로그가 아니며 expected는 관측 결과가 아니다. commit·worktree 이름은 실재하지 않는 기호이고 OMP·Git·모델을 실행하지 않는다.",
+  "source_messages": [
+    {
+      "id": "U1",
+      "role": "user",
+      "illustrative": true,
+      "text": "대시보드 목록을 보기 쉽게 정리하고 조회 속도를 개선해 줘. 기존 API 응답 형식은 유지해. 배포하지 마."
+    },
+    {
+      "id": "U2",
+      "role": "user",
+      "illustrative": true,
+      "text": "이 기획대로 구현해."
+    },
+    {
+      "id": "U3",
+      "role": "user",
+      "illustrative": true,
+      "text": "목록의 항목 순서는 바꾸지 마. 조회 속도 개선은 계속해."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R-ui",
+      "version": 1,
+      "kind": "outcome",
+      "scope": "ui",
+      "text": "대시보드 목록을 보기 쉽게 정리한다.",
+      "source_refs": [
+        {
+          "message_id": "U1",
+          "quote": "대시보드 목록을 보기 쉽게 정리하고",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 0,
+            "end_exclusive": 19
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-speed",
+      "version": 1,
+      "kind": "outcome",
+      "scope": "query",
+      "text": "조회 속도를 개선한다.",
+      "source_refs": [
+        {
+          "message_id": "U1",
+          "quote": "조회 속도를 개선해 줘.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 20,
+            "end_exclusive": 33
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-api",
+      "version": 1,
+      "kind": "constraint",
+      "scope": "global",
+      "text": "기존 API 응답 형식을 유지한다.",
+      "source_refs": [
+        {
+          "message_id": "U1",
+          "quote": "기존 API 응답 형식은 유지해.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 34,
+            "end_exclusive": 52
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-no-deploy",
+      "version": 1,
+      "kind": "constraint",
+      "scope": "global",
+      "text": "배포하지 않는다.",
+      "source_refs": [
+        {
+          "message_id": "U1",
+          "quote": "배포하지 마.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 53,
+            "end_exclusive": 60
+          }
+        }
+      ]
+    },
+    {
+      "id": "R-order",
+      "version": 1,
+      "kind": "constraint",
+      "scope": "ui",
+      "text": "목록 항목의 순서를 변경하지 않는다.",
+      "source_refs": [
+        {
+          "message_id": "U3",
+          "quote": "목록의 항목 순서는 바꾸지 마.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 0,
+            "end_exclusive": 17
+          }
+        }
+      ]
+    }
+  ],
+  "intent_revisions": [
+    {
+      "revision": 1,
+      "requirement_ids": [
+        "R-ui",
+        "R-speed",
+        "R-api",
+        "R-no-deploy"
+      ],
+      "source_message_ids": [
+        "U1"
+      ]
+    },
+    {
+      "revision": 2,
+      "requirement_ids": [
+        "R-ui",
+        "R-speed",
+        "R-api",
+        "R-no-deploy",
+        "R-order"
+      ],
+      "source_message_ids": [
+        "U1",
+        "U3"
+      ],
+      "supersedes": 1
+    }
+  ],
+  "drafts": [
+    {
+      "id": "D1",
+      "draft_revision": 1,
+      "intent_revision": 1,
+      "user_visible_plan": "대시보드 목록의 가독성과 조회 속도를 개선한다. 기존 API 응답 형식은 유지하며 배포하지 않는다. 속도 기준선은 먼저 측정한다. 응답 계약이 변하지 않는 범위에서 UI와 조회 내부 개선을 별도 worktree에 배정한다.",
+      "unmeasured_baseline": "unknown"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "A1",
+      "draft_id": "D1",
+      "draft_revision": 1,
+      "approved_intent_revision": 1,
+      "source_refs": [
+        {
+          "message_id": "U2",
+          "quote": "이 기획대로 구현해.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 0,
+            "end_exclusive": 11
+          }
+        }
+      ]
+    }
+  ],
+  "work_items": [
+    {
+      "id": "W-ui",
+      "initial_scope_epoch": 1,
+      "initial_intent_revision": 1,
+      "bound_requirement_versions": {
+        "R-ui": 1,
+        "R-api": 1,
+        "R-no-deploy": 1
+      },
+      "read_set": [
+        "example/ui",
+        "example/api-contract"
+      ],
+      "write_set": [
+        "example/ui"
+      ],
+      "base_commit": "example-base-A",
+      "worktree_ref": "example-worktree-ui",
+      "fixture_only": true
+    },
+    {
+      "id": "W-query",
+      "initial_scope_epoch": 1,
+      "initial_intent_revision": 1,
+      "bound_requirement_versions": {
+        "R-speed": 1,
+        "R-api": 1,
+        "R-no-deploy": 1
+      },
+      "read_set": [
+        "example/query",
+        "example/api-contract"
+      ],
+      "write_set": [
+        "example/query"
+      ],
+      "base_commit": "example-base-A",
+      "worktree_ref": "example-worktree-query",
+      "fixture_only": true
+    }
+  ],
+  "events": [
+    {
+      "id": "E01",
+      "sequence": 1,
+      "kind": "user_input",
+      "source_message_id": "U1",
+      "expected": {
+        "session_state": "planning",
+        "implementation_dispatch_allowed": false
+      }
+    },
+    {
+      "id": "E02",
+      "sequence": 2,
+      "kind": "draft_presented",
+      "draft_id": "D1",
+      "intent_revision": 1,
+      "source_event_ids": [
+        "E01"
+      ],
+      "expected": {
+        "session_state": "planning",
+        "implementation_dispatch_allowed": false
+      }
+    },
+    {
+      "id": "E03",
+      "sequence": 3,
+      "kind": "user_input",
+      "source_message_id": "U2",
+      "refers_to_draft": "D1",
+      "expected": {
+        "classification": "approve_displayed_draft"
+      }
+    },
+    {
+      "id": "E04",
+      "sequence": 4,
+      "kind": "approval_binding",
+      "approval_id": "A1",
+      "draft_id": "D1",
+      "intent_revision": 1,
+      "source_event_ids": [
+        "E03"
+      ],
+      "expected": {
+        "session_state": "ready",
+        "implementation_dispatch_allowed": true
+      }
+    },
+    {
+      "id": "E05",
+      "sequence": 5,
+      "kind": "dispatch_candidate",
+      "work_id": "W-ui",
+      "scope_epoch": 1,
+      "intent_revision": 1,
+      "approval_id": "A1",
+      "expected": {
+        "eligible": true,
+        "source_of_execution": "A1"
+      }
+    },
+    {
+      "id": "E06",
+      "sequence": 6,
+      "kind": "dispatch_candidate",
+      "work_id": "W-query",
+      "scope_epoch": 1,
+      "intent_revision": 1,
+      "approval_id": "A1",
+      "expected": {
+        "eligible": true,
+        "source_of_execution": "A1"
+      }
+    },
+    {
+      "id": "E07",
+      "sequence": 7,
+      "kind": "user_input",
+      "source_message_id": "U3",
+      "expected": {
+        "classification": "explicit_scoped_amendment",
+        "integration_hold_until_impact_known": true
+      }
+    },
+    {
+      "id": "E08",
+      "sequence": 8,
+      "kind": "impact_decision",
+      "intent_revision": 2,
+      "source_event_ids": [
+        "E07"
+      ],
+      "added_requirement_ids": [
+        "R-order"
+      ],
+      "affected_work_ids": [
+        "W-ui"
+      ],
+      "unaffected_work_ids": [
+        "W-query"
+      ],
+      "new_scope_epochs": {
+        "W-ui": 2,
+        "W-query": 1
+      },
+      "expected": {
+        "old_ui_result_must_not_be_accepted": true,
+        "query_work_can_continue": true,
+        "repeat_approval_required_for_explicit_delta": false
+      }
+    },
+    {
+      "id": "E09",
+      "sequence": 9,
+      "kind": "delivery_candidate",
+      "work_id": "W-ui",
+      "source_event_ids": [
+        "E07"
+      ],
+      "scope_epoch": 2,
+      "intent_revision": 2,
+      "expected": {
+        "state": "delivered",
+        "not_yet": "applied_to_artifact"
+      }
+    },
+    {
+      "id": "E10",
+      "sequence": 10,
+      "kind": "acknowledgment_fixture",
+      "work_id": "W-ui",
+      "acknowledged_event_ids": [
+        "E07"
+      ],
+      "scope_epoch": 2,
+      "intent_revision": 2,
+      "expected": {
+        "state": "acknowledged",
+        "not_proven": "semantic_compliance"
+      }
+    },
+    {
+      "id": "E11",
+      "sequence": 11,
+      "kind": "result_candidate",
+      "result_id": "RESULT-query",
+      "work_id": "W-query",
+      "scope_epoch": 1,
+      "source_intent_revision": 1,
+      "artifact_commit": "example-query-result-B",
+      "expected": {
+        "scope_change_decision": "unaffected",
+        "eligible_for_current_revision_revalidation": true,
+        "automatic_success_claim_allowed": false
+      }
+    },
+    {
+      "id": "E12",
+      "sequence": 12,
+      "kind": "result_candidate",
+      "result_id": "RESULT-ui-stale",
+      "work_id": "W-ui",
+      "scope_epoch": 1,
+      "source_intent_revision": 1,
+      "artifact_commit": "example-ui-result-C",
+      "expected": {
+        "decision": "reject_as_current_result",
+        "reason": "scope_epoch_stale",
+        "preserve_as_reusable_candidate": true
+      }
+    },
+    {
+      "id": "E13",
+      "sequence": 13,
+      "kind": "dispatch_candidate",
+      "work_id": "W-ui",
+      "scope_epoch": 2,
+      "intent_revision": 2,
+      "approval_id": "A1",
+      "amendment_event_ids": [
+        "E07"
+      ],
+      "required_requirement_versions": {
+        "R-ui": 1,
+        "R-api": 1,
+        "R-no-deploy": 1,
+        "R-order": 1
+      },
+      "expected": {
+        "eligible_after_current_context_assembly": true,
+        "full_task_history_copy_required": false
+      }
+    }
+  ],
+  "continuation_source_refs": [
+    {
+      "message_id": "U3",
+      "quote": "조회 속도 개선은 계속해.",
+      "span": {
+        "unit": "unicode_codepoint",
+        "start_inclusive": 18,
+        "end_exclusive": 32
+      }
+    }
+  ],
+  "expected_final_snapshot": {
+    "intent_revision": 2,
+    "session_state": "executing",
+    "scope_epochs": {
+      "W-ui": 2,
+      "W-query": 1
+    },
+    "stale_result_ids": [
+      "RESULT-ui-stale"
+    ],
+    "unaffected_work_ids": [
+      "W-query"
+    ],
+    "verified_completion": false
+  },
+  "limitations": [
+    "이 자료의 구조 검사는 자연어의 정확한 승인·영향 판정을 검증하지 않는다.",
+    "이 자료의 expected 값이 실제 OMP에서 성립하는지는 별도 통합 검증이 필요하다.",
+    "조회 작업은 최신 요구에 대한 검증 후보일 뿐 실제 완료했다고 주장하지 않는다."
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "example_only": true,
+  "notice": "가상 사용자 대화에서 원문·허가·목표를 구분하는 draft 예시다. 대화형 기획을 아직 확정하지 않았으며 실행 승인은 없다. 실제 실행·측정·권한 또는 배포 승인이 아니며 dispatch하지 않는다.",
+  "source_messages": [
+    {
+      "id": "m1",
+      "role": "user",
+      "illustrative": true,
+      "text": "로그인 응답이 느려. 개선해 줘. 기존 API는 유지하고, 수정 전에 원인부터 확인해 줘. 배포는 하지 마."
+    },
+    {
+      "id": "m2",
+      "role": "user",
+      "illustrative": true,
+      "text": "검증이 끝나면 스테이징 배포는 진행해도 돼. 프로덕션에는 배포하지 마."
+    }
+  ],
+  "intent": {
+    "id": "example-login-latency",
+    "revision": 2,
+    "state": "draft",
+    "source_ids": [
+      "m1",
+      "m2"
+    ],
+    "goal": {
+      "text": "로그인 응답 지연을 개선한다.",
+      "basis": "explicit",
+      "source_refs": [
+        {
+          "message_id": "m1",
+          "quote": "로그인 응답이 느려. 개선해 줘.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 0,
+            "end_exclusive": 18
+          }
+        }
+      ]
+    },
+    "requirements": [
+      {
+        "id": "R-latency",
+        "text": "로그인 응답 지연을 개선한다.",
+        "basis": "explicit",
+        "kind": "outcome",
+        "scope": "global",
+        "source_refs": [
+          {
+            "message_id": "m1",
+            "quote": "로그인 응답이 느려. 개선해 줘.",
+            "span": {
+              "unit": "unicode_codepoint",
+              "start_inclusive": 0,
+              "end_exclusive": 18
+            }
+          }
+        ],
+        "verification_note": "draft 단계에서는 숫자를 만들지 않는다. 실제 원인 조사 후 동일 조건의 전후 관찰과 API 호환성 검사를 연결한다."
+      },
+      {
+        "id": "R-api",
+        "text": "기존 API를 유지한다.",
+        "basis": "explicit",
+        "scope": "global",
+        "source_refs": [
+          {
+            "message_id": "m1",
+            "quote": "기존 API는 유지하고",
+            "span": {
+              "unit": "unicode_codepoint",
+              "start_inclusive": 19,
+              "end_exclusive": 31
+            }
+          }
+        ],
+        "kind": "constraint"
+      },
+      {
+        "id": "R-cause",
+        "text": "수정하기 전에 원인을 확인한다.",
+        "basis": "explicit",
+        "scope": "global",
+        "source_refs": [
+          {
+            "message_id": "m1",
+            "quote": "수정 전에 원인부터 확인해 줘.",
+            "span": {
+              "unit": "unicode_codepoint",
+              "start_inclusive": 33,
+              "end_exclusive": 50
+            }
+          }
+        ],
+        "kind": "constraint"
+      },
+      {
+        "id": "R-stage",
+        "text": "검증이 끝난 뒤 스테이징 배포를 할 수 있다.",
+        "basis": "explicit",
+        "scope": "global",
+        "conditional_permission": true,
+        "source_refs": [
+          {
+            "message_id": "m2",
+            "quote": "검증이 끝나면 스테이징 배포는 진행해도 돼.",
+            "span": {
+              "unit": "unicode_codepoint",
+              "start_inclusive": 0,
+              "end_exclusive": 24
+            }
+          }
+        ],
+        "kind": "permission"
+      },
+      {
+        "id": "R-no-prod",
+        "text": "프로덕션에는 배포하지 않는다.",
+        "basis": "explicit",
+        "scope": "global",
+        "source_refs": [
+          {
+            "message_id": "m2",
+            "quote": "프로덕션에는 배포하지 마.",
+            "span": {
+              "unit": "unicode_codepoint",
+              "start_inclusive": 25,
+              "end_exclusive": 39
+            }
+          }
+        ],
+        "kind": "constraint"
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A-reproduction",
+        "text": "허용된 개발 환경에서 로그인 지연을 재현할 수 있다.",
+        "basis": "inferred",
+        "verification": "unknown"
+      }
+    ],
+    "proposals": [
+      {
+        "id": "P-method",
+        "text": "관련 코드와 기존 로그를 확인하고 같은 조건의 관찰로 원인을 좁힌 뒤, API 호환성 범위를 확인하여 변경·검증한다.",
+        "basis": "proposed",
+        "source_refs": [],
+        "creates_permission": false
+      }
+    ],
+    "unknowns": [
+      "지연 기준선과 원인",
+      "실제 API 계약과 호환성 검사 방법",
+      "허용된 검증 환경과 스테이징 실행 경로"
+    ],
+    "supersedes": [
+      {
+        "previous_revision": 1,
+        "previous_requirement": {
+          "id": "R-no-deploy",
+          "text": "배포하지 않는다.",
+          "source_refs": [
+            {
+              "message_id": "m1",
+              "quote": "배포는 하지 마.",
+              "span": {
+                "unit": "unicode_codepoint",
+                "start_inclusive": 51,
+                "end_exclusive": 60
+              }
+            }
+          ]
+        },
+        "replacement_ids": [
+          "R-stage",
+          "R-no-prod"
+        ],
+        "reason_ref": {
+          "message_id": "m2",
+          "quote": "검증이 끝나면 스테이징 배포는 진행해도 돼. 프로덕션에는 배포하지 마.",
+          "span": {
+            "unit": "unicode_codepoint",
+            "start_inclusive": 0,
+            "end_exclusive": 39
+          }
+        }
+      }
+    ]
+  },
+  "work_item": {
+    "id": "W-inspect",
+    "intent_revision": 2,
+    "state": "draft",
+    "goal": "변경 전 지연 원인과 API 호환성 검사의 근거를 확보한다.",
+    "requirement_ids": [
+      "R-latency",
+      "R-api",
+      "R-cause"
+    ],
+    "context_refs": [],
+    "effects": [
+      "필요한 저장소와 기존 로그 읽기",
+      "host가 허용한 범위의 진단 실행"
+    ],
+    "view_rule": "현재 목표와 전역 조건 R-latency/R-api/R-cause/R-stage/R-no-prod를 포함하고, 허가와 의무를 구별하며 이번 조사의 관련 자료만 추가한다."
+  },
+  "result": {
+    "intent_revision": 2,
+    "scope": {
+      "kind": "intent",
+      "requirement_ids": [
+        "R-latency",
+        "R-api",
+        "R-cause",
+        "R-stage",
+        "R-no-prod"
+      ]
+    },
+    "state": "not_executed",
+    "checks": [
+      {
+        "requirement_id": "R-latency",
+        "status": "not_run",
+        "evidence_refs": []
+      },
+      {
+        "requirement_id": "R-api",
+        "status": "not_run",
+        "evidence_refs": []
+      },
+      {
+        "requirement_id": "R-cause",
+        "status": "not_run",
+        "evidence_refs": []
+      },
+      {
+        "requirement_id": "R-stage",
+        "status": "not_run",
+        "evidence_refs": []
+      },
+      {
+        "requirement_id": "R-no-prod",
+        "status": "not_run",
+        "evidence_refs": []
+      }
+    ],
+    "artifact_refs": [],
+    "evidence_refs": [],
+    "unresolved": [
+      "실제 저장소·로그·기준선·산출물을 확인하지 않았다.",
+      "원문과 유효한 변경 이력을 대상으로 한 최종 적합성 평가도 수행하지 않았다."
+    ],
+    "usage": null,
+    "aggregation_rule": "실제 구현에서는 하위 Result의 증거와 실패·미검증을 보존하고 목표 자체의 달성도 평가한다. R-stage는 선택적 허가이므로 배포를 선택하지 않은 것은 미완료가 아니다. 사용하지 않은 허가는 not_applicable로 구분한다."
+  },
+  "spec_corruption_probe": {
+    "status": "manual_semantic_check_not_run",
+    "mutation": "R-api의 text만 기존 함수 이름을 유지한다로 바꾸고 source_refs는 그대로 둔다.",
+    "structural_checks_may_pass": [
+      "원문 구절과 span이 일치한다.",
+      "메시지·requirement ID가 존재한다.",
+      "JSON 형태와 revision이 유효하다."
+    ],
+    "semantic_check_required": "원문과 최종 API 산출물의 인자·응답·오류 의미를 대조하여, 이름만 보존하는 조건이 원래 API 유지 요구를 부당하게 좁혔는지 판정한다."
+  },
+  "schema_version": 3,
+  "manual_fixture": true,
+  "execution_status": "not_run",
+  "planning": {
+    "state": "planning",
+    "approved_draft_revision": null,
+    "execution_authorized": false,
+    "note": "조건부 스테이징 허가는 전체 기획 확정이나 구현 개시 승인이 아니다."
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+.workflow/
+.env
+.env.*
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.omp-workflow/

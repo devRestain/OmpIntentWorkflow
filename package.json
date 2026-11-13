@@ -1,0 +1,11 @@
+{
+  "name": "omp-intent-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Native-first OMP planning, durable intent, and linked-worktree execution",
+  "omp": { "extensions": ["src/omp/extension.ts"], "settings": { "enabled": {"type":"boolean","default":true,"description":"Enable guided workflow for new development goals"} } },
+  "scripts": { "verify": "./scripts/verify-workflow", "check": "tsc --noEmit" },
+  "dependencies": { "@oh-my-pi/pi-coding-agent": "18.18.6" },
+  "devDependencies": { "@types/bun": "^1.4.4", "typescript": "^5.9.0" }
+}

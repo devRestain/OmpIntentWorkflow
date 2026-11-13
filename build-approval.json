@@ -1,0 +1,9 @@
+{
+  "plan": "B1 plus the native-first OMP plugin amendment presented immediately before approval",
+  "user_input": "approve",
+  "status": "approved",
+  "scope": ["current project", "native user-scope OMP plugin registration", "related OMP settings", "real existing-provider OMP and Git verification"],
+  "preserved_acceptance": "All fourteen scenarios and ./scripts/verify-workflow exit-zero contract remain required",
+  "stop_conditions": ["100 investigation/verification/correction cycles", "unresolved material ambiguity", "credential change or exposure", "destructive Git or risk of losing user work", "new paid service without authorization"],
+  "design_preference": "Use native OMP plugin lifecycle, UI, models, tools, sessions and tasks where they satisfy the required behavior; use a narrow adapter only for missing control boundaries. No separate service or OMP core patch."
+}
